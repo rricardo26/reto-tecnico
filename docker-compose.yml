@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  nginx:
+    build: docker/nginx
+    image: project-nginx:latest
+    container_name: project-nginx
+    volumes:
+      - ./:/var/www/html/project
+    ports:
+      - 80:80
+    networks:
+      - project
+  app-backend:
+    build: docker/app/backend
+    image: project-backend:latest
+    container_name: project-backend
+    volumes:
+      - ./:/var/www/html/project
+    networks:
+      - project
+  mariadb:
+    image: yobasystems/alpine-mariadb
+    container_name: project-mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: reto_tecnico
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - 3306:3306
+    volumes:
+      - mariadbdata:/var/lib/mysql
+    networks:
+      - project
+
+networks:
+  project:
+    driver: bridge
+
+volumes:
+  mariadbdata:
+    driver: local

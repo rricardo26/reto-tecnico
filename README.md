@@ -119,3 +119,18 @@ Authorization: Bearer 2|F0S9gk0Q31zBgyENgpRHrHwlSOrUI5VnosuwmnJQ0f019efc
 	"filter_to": "2025-01-01 23:45:23"
 }
 ```
+
+## Infrasetructura
+ El proyecto utiliza principalmente para la gestión de los datos el patrón Repository para separar la lógica 
+ de Base de datos en una capa distinta a la de negocio. EL uso de contenedores de docker simplifica mucho 
+ el despliegue de la aplicación, tanto en producción como en desarrollo, de esa manera se evitan problemas
+ de compatibilidad y versiones en el la máquina en la que se desea trabajar.
+
+ La versión de laravel que estamos usando en la 11 y la versión de PHP es la 8.3 por un tema de compatibilidad.
+ Los paquetes extra que instalamos fuerons los siguientes:
+ - laravel spatie para los permisos y roles
+ - laravel excel para la exportación en .xlsx
+ - laravel sanctum para la autenticación
+
+ El uso de nginx en vez de apache es debido a su fácil configuración initial y sintaxis sencilla y enetendible.
+ 

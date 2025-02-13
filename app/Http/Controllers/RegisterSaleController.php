@@ -7,6 +7,7 @@ use App\Http\Requests\SaleRequest;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\SaleRepository;
 use App\Repositories\SaleProductRepository;
+use Illuminate\Support\Facades\Gate;
 
 class RegisterSaleController extends Controller
 {
@@ -14,6 +15,7 @@ class RegisterSaleController extends Controller
 
     public function __invoke(SaleRequest $request)
     {
+        Gate::authorize('Create Sale');
         try {
             \DB::beginTransaction();
             $saleRepository = new SaleRepository;

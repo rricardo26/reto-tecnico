@@ -17,8 +17,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('products', ProductController::class);
     Route::post('register-sale', RegisterSaleController::class);
 
-    Route::post('sales-export-json', SalesExportJsonController::class);
-    Route::post('sales-export-xlsx', SalesExportXlsxController::class);
+    Route::group(['middleware' => 'can:Exports'], function () {
+        Route::post('sales-export-json', SalesExportJsonController::class);
+        Route::post('sales-export-xlsx', SalesExportXlsxController::class);
+    });
 });
 
 Route::get('/user', function (Request $request) {

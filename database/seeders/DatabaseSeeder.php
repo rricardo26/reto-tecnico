@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {    
-        // $this->call(ClientSeeder::class);
+        $this->call(ClientSeeder::class);
         Permission::create(['name' => 'View Products List']);
         Permission::create(['name' => 'View Product']);
         Permission::create(['name' => 'Create Product']);
@@ -21,9 +21,15 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'Delete Product']);
 
         Permission::create(['name' => 'Create Sale']);
+        Permission::create(['name' => 'Exports']);
 
         Role::create(['name' => 'Super Admin']);
-        $role = Role::create(['name' => 'Vendedor']);
-        $role->givePermissionTo(Permission::all());
+        $role = Role::firstOrCreate(['name' => 'Vendedor']);
+        $role->givePermissionTo(Permission::whereIn('name', [
+            'View Products List',
+            'Create Product',
+            'Update Product',
+            'Create Sale',
+        ])->get());
     }
 }
